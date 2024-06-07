@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body{
+            background-color: bisque;
+        }
+        .container {
+            margin-top: 50px;
+            background-color: rgba(255, 255, 255, 0.8); /* White background with 80% opacity */
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Expense Tracker</h1>
+        <p>Welcome, <span id="username"></span>!</p>
+        <div class="btn-group-vertical" role="group" aria-label="Main actions">
+            <button type="button" class="btn btn-primary mb-3" onclick="location.href='add_expense.html'">Add Expense</button>
+            <button type="button" class="btn btn-warning mb-3" onclick="location.href='edit_delete_expense.html'">Edit/Delete Expense</button>
+            <button type="button" class="btn btn-success mb-3" onclick="location.href='summary.html'">View Summary</button>
+        </div>
+        <button type="button" class="btn btn-danger" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            if (!loggedInUser) {
+                alert('You need to log in first.');
+                window.location.href = 'signin.html';
+            } else {
+                document.getElementById('username').textContent = loggedInUser;
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('loggedInUser');
+            window.location.href = 'signin.html';
+        }
+    </script>
+</body>
+</html>

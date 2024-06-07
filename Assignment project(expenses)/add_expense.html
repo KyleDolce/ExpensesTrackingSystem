@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expense</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body{
+            background-color: lightblue;
+        }
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button type="button" class="btn btn-success mb-3" onclick="location.href='main.html'"> Home button</button>
+    </div>
+    <div class="container">
+        <h1>Add Expense</h1>
+        <form id="addExpenseForm">
+            <div class="form-group">
+                <label for="expenseAmount">Amount</label>
+                <input type="number" class="form-control" id="expenseAmount" required>
+            </div>
+            <div class="form-group">
+                <label for="expenseDate">Date</label>
+                <input type="date" class="form-control" id="expenseDate" required>
+            </div>
+            <div class="form-group">
+                <label for="expenseDescription">Description</label>
+                <input type="text" class="form-control" id="expenseDescription" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Expense</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            if (!loggedInUser) {
+                alert('You need to log in first.');
+                window.location.href = 'signin.html';
+                return;
+            }
+
+            $('#addExpenseForm').submit(function(e) {
+                e.preventDefault();
+                const amount = $('#expenseAmount').val();
+                const date = $('#expenseDate').val();
+                const description = $('#expenseDescription').val();
+
+                let userExpenses = JSON.parse(localStorage.getItem(`${loggedInUser}_expenses`)) || [];
+                userExpenses.push({ amount, date, description });
+                localStorage.setItem(`${loggedInUser}_expenses`, JSON.stringify(userExpenses));
+
+                alert('Expense added successfully!');
+                $('#addExpenseForm')[0].reset();
+            });
+        });
+    </script>
+</body>
+</html>
